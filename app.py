@@ -3,8 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
 
-# Własna funkcja do sortowania z polskimi znakami (nie wyrzuca błędów na macOS/Windows)
-def pl_sort_key(text):
+def _pl_sort_key(text):
     if not isinstance(text, str):
         return ""
     text = text.lower()
@@ -91,7 +90,7 @@ elif page == "Profil wybranego filmu":
     st.title("Szczegółowy profil filmu")
     st.write("Wybierz film z listy, aby zobaczyć jego statystyki oraz dokładny rozkład wszystkich oddanych głosów (od 1 do 10).")
 
-    tytuly = sorted(df["title"].dropna().unique(), key=pl_sort_key)
+    tytuly = sorted(df["title"].dropna().unique(), key=_pl_sort_key)
     wybrany_film = st.selectbox("Wyszukaj i wybierz film:", tytuly)
 
     dane_filmu = df[df["title"] == wybrany_film].iloc[0]
@@ -191,7 +190,7 @@ elif page == "Przegląd bazy filmów":
             wybrany_czas = st.slider("Czas trwania (min)", min_value=min_czas, max_value=max_czas, value=(min_czas, max_czas))
             
         with f1_col4:
-            dostepni_rezyserzy = sorted(df["director"].dropna().astype(str).unique(), key=pl_sort_key)
+            dostepni_rezyserzy = sorted(df["director"].dropna().astype(str).unique(), key=_pl_sort_key)
             wybrani_rezyserzy = st.multiselect("Reżyser", options=dostepni_rezyserzy)
 
         f2_col1, f2_col2, f2_col3, f2_col4 = st.columns(4)
@@ -207,11 +206,11 @@ elif page == "Przegląd bazy filmów":
             wybrane_glosy = st.slider("Liczba głosów", min_value=min_glosy, max_value=max_glosy, value=(min_glosy, max_glosy), step=1000)
             
         with f2_col3:
-            dostepne_kraje = sorted(df["country"].dropna().astype(str).unique(), key=pl_sort_key)
+            dostepne_kraje = sorted(df["country"].dropna().astype(str).unique(), key=_pl_sort_key)
             wybrane_kraje = st.multiselect("Kraj produkcji", options=dostepne_kraje)
             
         with f2_col4:
-            dostepne_jezyki = sorted(df["language"].dropna().astype(str).unique(), key=pl_sort_key)
+            dostepne_jezyki = sorted(df["language"].dropna().astype(str).unique(), key=_pl_sort_key)
             wybrane_jezyki = st.multiselect("Język", options=dostepne_jezyki)
             
     df_filtered = df_filtered[(df_filtered["year"] >= wybrany_rok[0]) & (df_filtered["year"] <= wybrany_rok[1])]
