@@ -1,0 +1,10 @@
+{
+    "git.ignoreLimitWarning": true,
+    "workbench.editorAssociations": {
+        "0": {
+            "filenamePattern": "*.ipynb",
+            "viewType": "jupyter-notebook"
+        },
+        "file:/**/*.csv": "jupyter-data-wrangler"
+    }
+}
